@@ -8,10 +8,10 @@ Crud api built with FastAPI (python)
 
 *run pip install -r requirements.txt to install dependecies
 
-*start the application by running python main.py
+*start the application by running python main.py on your terminal
 
 *Valid dates for each pubished_date ranges from 1700-2024
 
 **Testing**
 
-Test the endpoints by running pytest test.py
+Run automated by running pytest test.py on your terminal
