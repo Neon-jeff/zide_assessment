@@ -14,27 +14,27 @@ def GetBookByID(id):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail={"error":"book not found"})
     return book
 
-@app.get('/')
+@app.get('/',summary='Server Check')
 def ping():
     return 'pong'
 
-@app.post('/books')
+@app.post('/books',summary='Add a new book to the collection')
 def AddBook(book:CreateBookSchema):
     last_book_id=books[-1].id if len(books)>0 else 0
     new_book=BookSchema(id=last_book_id+1,title=book.title,author=book.author,published_year=book.published_year)
     books.append(new_book)
     return new_book
 
-@app.get('/books',response_model=list[BookSchema])
+@app.get('/books',response_model=list[BookSchema],summary='Get all the books in the book store')
 def GetAllBooks():
     return books
 
-@app.get('/books/{id}',response_model=BookSchema)
+@app.get('/books/{id}',response_model=BookSchema,summary='Get a specific book with the id')
 def GetBook(id:int):
     return GetBookByID(id)
 
 
-@app.delete('/books/{id}')
+@app.delete('/books/{id}', summary='delete a specific book')
 def DeleteBook(id:int):
     book=GetBookByID(id)
     books.remove(book)
@@ -43,7 +43,7 @@ def DeleteBook(id:int):
 
 
 # for a partial update, a patch request is more suitable
-@app.patch('/books/{id}')
+@app.patch('/books/{id}',summary='Update a book with it"s id')
 def UpdateBook(id:int,fields:UpdateBookSchema):
     old_book=GetBookByID(id)
     book_index=books.index(old_book)
